@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Lexend+Deca:100,200,300,regular,500,600,700,800,900);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,14 +18,13 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  html {
+    @apply font-lexend-deca;
+  }
+  body {
+    @apply bg-[##FBFBFB] min-h-screen;
+  }
 }
 
 @layer utilities {
