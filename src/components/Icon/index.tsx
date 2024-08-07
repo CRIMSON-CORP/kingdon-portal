@@ -4,6 +4,8 @@ interface IconProps {
   viewBox?: string;
   nameSpace?: string;
   className?: string;
+  stroke?: string;
+  fill?: string;
 }
 
 function Icon({
@@ -12,6 +14,8 @@ function Icon({
   viewBox,
   nameSpace = "icons",
   className,
+  stroke,
+  fill,
 }: IconProps) {
   return (
     <svg
@@ -20,7 +24,7 @@ function Icon({
       {...(viewBox && { viewBox })}
       className={className}
     >
-      <use href={`/img/${nameSpace}.svg#${name}`} />
+      <use href={`/img/${nameSpace}.svg#${name}`} fill={fill} stroke={stroke} />
     </svg>
   );
 }
