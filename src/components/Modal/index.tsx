@@ -87,8 +87,6 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
 
   useEffect(() => {
     const closeModalOnEscape = (e: KeyboardEvent) => {
-      console.log(e.key);
-
       if (e.key === "Escape") {
         closeModal();
       }

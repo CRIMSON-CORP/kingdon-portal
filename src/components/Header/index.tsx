@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Icon from "../Icon";
 
@@ -56,13 +57,13 @@ function NavItem({ href, name, matchers }: NavItem) {
 
   const active = matchers.includes(pathname.split("/")[2]);
   return (
-    <a
+    <Link
       href={href}
       data-active={active}
       className="data-[active='true']:text-[#020b23] text-[#808591] text-lg font-bold"
     >
       {name}
-    </a>
+    </Link>
   );
 }
 
