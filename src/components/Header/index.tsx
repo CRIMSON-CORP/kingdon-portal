@@ -25,17 +25,17 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    href: "/",
+    href: "/dashboard",
     name: "Prayer Bank",
     matchers: ["/", "dashbaord", undefined],
   },
   {
-    href: "/prayer-room",
+    href: "/dashboard/prayer-room",
     name: "Prayer Room",
     matchers: ["prayer-room"],
   },
   {
-    href: "/testimonies",
+    href: "/dashboard/testimonies",
     name: "Testimonies",
     matchers: ["testimonies"],
   },
