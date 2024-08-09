@@ -40,6 +40,11 @@ const navItems: NavItem[] = [
     name: "Testimonies",
     matchers: ["testimonies"],
   },
+  {
+    href: "/dashboard/profile",
+    name: "Profile",
+    matchers: ["profile"],
+  },
 ];
 
 function NavBar() {

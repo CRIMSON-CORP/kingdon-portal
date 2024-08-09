@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import TruncatedText from "../TruncatedText";
+import AsidePostButton from "./AsidePostButton";
 
 interface AsideContent {
   avatar: string;
@@ -51,6 +53,7 @@ function Aside() {
           <AsideContent key={item.title} {...item} />
         ))}
       </div>
+      <AsidePostButton />
     </aside>
   );
 }

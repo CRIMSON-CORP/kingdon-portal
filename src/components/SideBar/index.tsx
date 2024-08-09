@@ -1,9 +1,20 @@
+"use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Icon from "../Icon";
 
 function SideBar() {
+  const pathname = usePathname();
+  const URLSWhereCannotShowSideBar = ["profile", "settings"];
+  const canShowSidebar = !URLSWhereCannotShowSideBar.includes(
+    pathname.split("/")[2]
+  );
+
   return (
-    <div className="flex flex-col gap-4">
+    <div
+      data-can-show={canShowSidebar}
+      className="flex-col gap-4 data-[can-show='true']:flex hidden"
+    >
       <div className="bg-white rounded-[20px] border border-[#e7e7e7] flex-col py-5">
         <div className="flex flex-col gap-4 px-4">
           <div className="flex flex-col items-center gap-2">
@@ -39,7 +50,7 @@ function SideBar() {
           <span className="text-[#020b23] text-sm">Analytics</span>
           <div className="flex justify-between">
             <div className="flex items-center gap-2 text-[#808591] text-sm">
-              <Icon name="prayer" size={24} />
+              <Icon name="prayer" />
               <div className="flex flex-col gap-0.5">
                 <span className="text-[#020b23] text-[10px] font-light leading-none">
                   Total Chosen
@@ -50,9 +61,7 @@ function SideBar() {
               </div>
             </div>
             <div className="flex items-center gap-2 text-[#808591] text-sm">
-              <div className="size-6 bg-[#F2DF7C] rounded-full flex items-center justify-center">
-                <Icon name="check" size={12.63} />
-              </div>
+              <Icon name="completed" />
               <div className="flex flex-col gap-0.5">
                 <span className="text-[#020b23] text-[10px] font-light leading-none">
                   Completed
