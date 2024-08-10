@@ -43,7 +43,7 @@ const navItems: NavItem[] = [
   {
     href: "/dashboard/profile",
     name: "Profile",
-    matchers: ["profile"],
+    matchers: ["profile", "settings"],
   },
 ];
 

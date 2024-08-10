@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import TruncatedText from "../TruncatedText";
 import AsidePostButton from "./AsidePostButton";
 
@@ -35,8 +36,17 @@ const completContent: AsideContent[] = [
 ];
 
 function Aside() {
+  const pathname = usePathname();
+  const URLSWhereCannotShowAsideBar = ["settings"];
+  const canShowAsidebar = !URLSWhereCannotShowAsideBar.includes(
+    pathname.split("/")[2]
+  );
+
   return (
-    <aside className="flex flex-col gap-6">
+    <aside
+      data-can-show={canShowAsidebar}
+      className="flex-col gap-6 data-[can-show='true']:flex hidden"
+    >
       <div className="py-4 px-5 bg-white rounded-[20px] border border-[#e7e7e7] flex-col justify-start items-start gap-[18px] flex">
         <a>
           <span>Let&apos;s Complete &rarr;</span>

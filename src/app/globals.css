@@ -23,7 +23,7 @@
     @apply font-lexend-deca;
   }
   body {
-    @apply bg-[#FBFBFB] min-h-screen;
+    @apply bg-[#FBFBFB] h-full min-h-screen;
   }
 }
 
