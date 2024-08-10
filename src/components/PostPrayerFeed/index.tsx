@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-function index() {
+function PostPrayerFeed() {
   return (
     <button className="p-6 bg-white rounded-[20px] border border-[#e7e7e7] gap-3.5 flex">
       <Image
@@ -17,4 +17,4 @@ function index() {
   );
 }
 
-export default index;
+export default PostPrayerFeed;

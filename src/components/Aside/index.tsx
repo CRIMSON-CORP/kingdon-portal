@@ -1,15 +1,7 @@
 "use client";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import TruncatedText from "../TruncatedText";
+import AsideContent from "../AsideContent";
 import AsidePostButton from "./AsidePostButton";
-
-interface AsideContent {
-  avatar: string;
-  userId: string;
-  title: string;
-  content: string;
-}
 
 const completContent: AsideContent[] = [
   {
@@ -47,46 +39,11 @@ function Aside() {
       data-can-show={canShowAsidebar}
       className="flex-col gap-6 data-[can-show='true']:flex hidden"
     >
-      <div className="py-4 px-5 bg-white rounded-[20px] border border-[#e7e7e7] flex-col justify-start items-start gap-[18px] flex">
-        <a>
-          <span>Let&apos;s Complete &rarr;</span>
-        </a>
-        {completContent.map((item) => (
-          <AsideContent key={item.title} {...item} />
-        ))}
-      </div>
-      <div className="py-4 px-5 bg-white rounded-[20px] border border-[#e7e7e7] flex-col justify-start items-start gap-[18px] flex">
-        <a>
-          <span>Trending Prayer Requests &rarr;</span>
-        </a>
-        {completContent.map((item) => (
-          <AsideContent key={item.title} {...item} />
-        ))}
-      </div>
+      <AsideContent title="Let's Complete" content={completContent} />
+      <AsideContent title="Trending Prayer Requests" content={completContent} />
       <AsidePostButton />
     </aside>
   );
 }
 
 export default Aside;
-
-function AsideContent({ title, content, avatar, userId }: AsideContent) {
-  return (
-    <article className="flex flex-col pb-2 last:border-none last:pb-0 border-b border-[#E7E7E7]">
-      <div className="flex items-center gap-1.5">
-        <Image
-          src={avatar}
-          width={34}
-          height={34}
-          alt="avatar"
-          className="rounded-full border border-[#E7E7E7]"
-        />
-        <span className="text-[#020b23] text-xs">{userId}</span>
-      </div>
-      <h3 className="text-[#020b23] text-xs font-semibold ">{title}</h3>
-      <p className="text-[#020b23] text-[10px] font-light">
-        <TruncatedText content={content} />
-      </p>
-    </article>
-  );
-}

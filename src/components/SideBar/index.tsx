@@ -1,7 +1,32 @@
 "use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import AsideContent from "../AsideContent";
 import Icon from "../Icon";
+
+const completContent: AsideContent[] = [
+  {
+    avatar: "/img/avatar.png",
+    userId: "Ele1981",
+    title: "Prayer of healing for my mum",
+    content:
+      "Heavenly Father, I humbly ask for your healing touch on my beloved mum. Grant her strength to overcome the storms of life.",
+  },
+  {
+    avatar: "/img/avatar.png",
+    userId: "layla34",
+    title: "Prayer for scholarship",
+    content:
+      "Heavenly Father, I humbly ask for your healing touch on my beloved mum. Grant her strength to overcome the storms of life.",
+  },
+  {
+    avatar: "/img/avatar.png",
+    userId: "Jordan678",
+    title: "Prayer for visa approval",
+    content:
+      "Heavenly Father, I humbly ask for your healing touch on my beloved mum. Grant her strength to overcome the storms of life.",
+  },
+];
 
 function SideBar() {
   const pathname = usePathname();
@@ -77,6 +102,7 @@ function SideBar() {
       <button className="p-4 bg-[#2967b3] rounded text-white text-sm font-semibold">
         Post
       </button>
+      <AsideContent title="Check Reports" content={completContent} />
     </div>
   );
 }
