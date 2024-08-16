@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const lexend_deca = Lexend_Deca({
@@ -19,7 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={lexend_deca.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

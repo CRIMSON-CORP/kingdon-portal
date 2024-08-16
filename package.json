@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -22,6 +24,7 @@
     "react": "^18",
     "react-day-picker": "8.10.1",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "shadcn-ui": "^0.8.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"
