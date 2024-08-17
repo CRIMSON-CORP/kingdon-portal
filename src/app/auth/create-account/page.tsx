@@ -1,8 +1,8 @@
 "use client";
 import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
+import axios from "axios";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import InputPassword from "./InputPassword";
@@ -13,7 +13,6 @@ function Page() {
   >("idle");
 
   const { push } = useRouter();
-  const searchParams = useSearchParams();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,23 +24,20 @@ function Page() {
     try {
       setRequestStatus("loading");
 
-      const response = await signIn("credentials", {
-        username,
+      const response = await axios.post("/api/auth/create-account", {
+        email: username,
         password,
-        callbackUrl: "/dashboard",
-        redirect: false,
       });
-
       if (!response) throw new Error("Network Request Failed");
-      const { ok, error, url } = response;
-      if (error) throw new Error(error);
-      if (ok) {
+      const { data, status } = response;
+      if (status !== 200) throw new Error(data.message);
+      else {
         setRequestStatus("success");
-        toast.success("Login Successful");
-        push(searchParams.get("callbackUrl") || url || "/dashboard");
+        toast.success("Signup Successful, Please login to continue.");
+        push("/auth/login");
       }
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message?.join(",") || error.message);
       setRequestStatus("idle");
     }
   }
@@ -50,12 +46,12 @@ function Page() {
     <div className="flex flex-col gap-6 items-center pb-80">
       <header className="text-center max-w-[438px]">
         <h1 className="text-[#020b23] text-[42px] font-light">
-          Welcome back to the <span className="font-semibold">Family!</span>
+          Be a part of the <span className="font-semibold">Family!</span>
         </h1>
       </header>
       <div className="flex flex-col items-center gap-16 bg-white rounded-[20px] border border-[#e7e7e7] max-w-[800px] w-full p-8">
         <h2 className="text-center text-[#020b23] text-xl font-light">
-          Sign in to your account
+          Create a free account today to get started
         </h2>
         <form
           onSubmit={handleSubmit}
@@ -88,13 +84,13 @@ function Page() {
             disabled={requestStatus !== "idle"}
             className="p-5 bg-[#2967b3] rounded-[10px] justify-center items-center gap-2.5 flex text-center text-white text-base font-medium leading-tight"
           >
-            {requestStatus !== "idle" ? "Loggin in..." : "Login"}
+            {requestStatus !== "idle" ? "Siging up..." : "Login"}
           </button>
         </form>
         <p className="text-[#bbbec1] text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="create-account" className="text-[#2967b3]">
-            Create Account
+          Already have an account?{" "}
+          <Link href="login" className="text-[#2967b3]">
+            Log In
           </Link>
         </p>
       </div>

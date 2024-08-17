@@ -17,19 +17,20 @@ export const nextAuthOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          const { data } = await axios.post("/auth/login", credentials);
-
-          const { message, status } = data;
-          if (data) {
+          const response = await axios.post("/auth/login", {
+            username: credentials?.username,
+            password: credentials?.password,
+          });
+          const { message, code, data: responseData } = response.data;
+          if (code === 200) {
             return {
               ...message,
-              id: message.id,
-              email: message.email,
-              image: message.image,
-              name: message.fullName,
-              token: status,
+              id: responseData.user.id,
+              email: responseData.user.email,
+              name: responseData.user.unique_id,
+              token: responseData.token,
             };
-          } else throw new Error(data.error);
+          } else throw response;
         } catch (error: any) {
           throw new Error(error.response.data.message);
         }
