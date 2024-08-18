@@ -24,7 +24,6 @@ export const nextAuthOptions: NextAuthOptions = {
           const { message, code, data: responseData } = response.data;
           if (code === 200) {
             return {
-              ...message,
               id: responseData.user.id,
               email: responseData.user.email,
               name: responseData.user.unique_id,
