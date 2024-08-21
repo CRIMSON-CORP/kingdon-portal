@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import NavBar from "./NavBar";
+import Search from "./Search";
 
 export default function RootLayout({
   children,
@@ -22,13 +23,7 @@ export default function RootLayout({
       <div className="flex items-center gap-3">
         <div className="flex items-center p-3 rounded-lg border border-[#e7e7e7] gap-2 flex-1">
           <Icon name="search" />
-          <input
-            type="search"
-            name=""
-            id=""
-            placeholder="Search Users"
-            className="flex-1 bg-transparent outline-none"
-          />
+          <Search />
         </div>
         <DateRangeFilter />
       </div>
