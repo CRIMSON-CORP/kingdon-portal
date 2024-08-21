@@ -1,22 +1,27 @@
-"use client";
+import { getUsersNoParams } from "@/lib/server-actions";
+import NavLink from "./NavLink";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+async function NavBar() {
+  const users = await getUsersNoParams<{ data: User[] }>();
 
-function NavBar() {
-  const urlSearchParams = useSearchParams();
-  const page = urlSearchParams.get("page");
+  const suspendedUsers = users.data.filter(
+    (user) => user.status === "suspended" || user.status === "banned"
+  );
+
   return (
     <nav className="[&>[data-active='true']]:text-[#2967b3] text-[#808591] text-base font-medium font-['Lexend Deca'] flex gap-5 items-center">
-      <Link href="/admin/prayer-bank" data-active={page === null}>
-        All - 10,000
-      </Link>
-      <Link
-        href="/admin/prayer-bank?page=suspended"
-        data-active={page === "suspended"}
-      >
-        Suspended/Banned Users - 100
-      </Link>
+      <NavLink
+        pageKey={null}
+        href="/admin/users"
+        label="All"
+        count={users.data.length.toString()}
+      />
+      <NavLink
+        pageKey="suspended"
+        href="/admin/users?view=suspended"
+        label="Suspended/Banned Users "
+        count={suspendedUsers.length.toString()}
+      />
     </nav>
   );
 }

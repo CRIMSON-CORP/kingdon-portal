@@ -15,20 +15,17 @@ export const nextAuthOptions: NextAuthOptions = {
         username: {},
         password: {},
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         try {
           const response = await axios.post("/auth/login", {
             username: credentials?.username,
             password: credentials?.password,
           });
-          const { message, code, data: responseData } = response.data;
+
+          const { code, data: responseData } = response.data;
+
           if (code === 200) {
-            return {
-              id: responseData.user.id,
-              email: responseData.user.email,
-              name: responseData.user.unique_id,
-              token: responseData.token,
-            };
+            return { ...responseData.user, token: responseData.token };
           } else throw response;
         } catch (error: any) {
           throw new Error(error.response.data.message);
@@ -44,7 +41,8 @@ export const nextAuthOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    async session({ session, token }) {
+    async session(params) {
+      const { session, token } = params;
       session.user = token;
       return session;
     },

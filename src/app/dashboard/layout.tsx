@@ -1,9 +1,6 @@
 import Aside from "@/components/Aside";
 import Header from "@/components/Header";
 import SideBar from "@/components/SideBar";
-import { nextAuthOptions } from "@/lib/next-auth-options";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import Providers from "../Providers";
 
 export default async function RootLayout({
@@ -11,11 +8,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(nextAuthOptions);
+  // const session = await getServerSession(nextAuthOptions);
 
-  if (!session) {
-    redirect("/auth/loging");
-  }
+  // if (!session) {
+  //   redirect("/auth/login");
+  // }
+
+  // if (session) {
+  //   if (session.user?.role?.role === "admin") {
+  //     redirect("/admin");
+  //   } else {
+  //     redirect("/dashboard");
+  //   }
+  // }
 
   return (
     <Providers>

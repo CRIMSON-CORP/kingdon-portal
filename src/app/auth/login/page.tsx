@@ -1,14 +1,7 @@
-import { nextAuthOptions } from "@/lib/next-auth-options";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import Form from "./Form";
 
 async function Page() {
-  const session = await getServerSession(nextAuthOptions);
-  if (session) {
-    redirect("/dashboard");
-  }
   return (
     <div className="flex flex-col gap-6 items-center pb-80">
       <header className="text-center max-w-[438px]">
