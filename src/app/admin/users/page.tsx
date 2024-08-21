@@ -3,7 +3,8 @@ import Image from "next/image";
 import ListPagination from "./Pagination";
 
 async function page({ searchParams }: PageProps) {
-  const users: PaginationData & { data: User[] } = await getUsers(searchParams);
+  const params = { ...searchParams };
+  const users: PaginationData & { data: User[] } = await getUsers(params);
 
   return (
     <div className="flex flex-col gap-5">
