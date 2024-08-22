@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Suspense } from "react";
 import NavBar from "./NavBar";
 import Search from "./Search";
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <div className="flex items-center gap-3">
         <div className="flex items-center p-3 rounded-lg border border-[#e7e7e7] gap-2 flex-1">
           <Icon name="search" />
-          <Search />
+          <Suspense>
+            <Search />
+          </Suspense>
         </div>
         <DateRangeFilter />
       </div>

@@ -18,7 +18,9 @@ export async function getUsersNoParams<T>() {
   }
 }
 
-export async function getUsers<T>(params: any): Promise<T> {
+export async function getUsers<T>(
+  params: PageProps["searchParams"]
+): Promise<T> {
   try {
     const view = params.view;
     delete params.view;

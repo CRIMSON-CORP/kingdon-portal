@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import Form from "./Form";
 
 async function Page() {
@@ -13,7 +14,9 @@ async function Page() {
         <h2 className="text-center text-[#020b23] text-xl font-light">
           Sign in to your account
         </h2>
-        <Form />
+        <Suspense>
+          <Form />
+        </Suspense>
         <p className="text-[#bbbec1] text-sm">
           Don&apos;t have an account?{" "}
           <Link href="create-account" className="text-[#2967b3]">

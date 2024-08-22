@@ -1,4 +1,5 @@
 import PostPrayerFeed from "@/components/PostPrayerFeed";
+import { Suspense } from "react";
 import NavBar from "./NavBar";
 
 export default function RootLayout({
@@ -8,7 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex flex-col gap-4">
-      <NavBar />
+      <Suspense>
+        <NavBar />
+      </Suspense>
       <PostPrayerFeed />
       <div className="flex flex-col gap-5">{children}</div>
     </div>

@@ -1,6 +1,7 @@
 import Icon from "@/components/Icon";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import NavBar from "./NavBar";
 
 export default function RootLayout({
@@ -61,7 +62,9 @@ export default function RootLayout({
         </nav>
       </div>
       <div className="flex items-center justify-between">
-        <NavBar />
+        <Suspense>
+          <NavBar />
+        </Suspense>
         <div>
           <span className="text-sm">Analytics:</span>
         </div>
