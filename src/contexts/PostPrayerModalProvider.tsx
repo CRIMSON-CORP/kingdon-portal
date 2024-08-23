@@ -1,6 +1,7 @@
 "use client";
 import Modal from "@/components/Modal";
-import React, { createContext, useContext, useState } from "react";
+import PostPrayeForm from "@/components/PostPrayerForm";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 const ModalContext = createContext({
   isModalOpen: false,
@@ -23,11 +24,16 @@ const PostPrayerModalProvider = ({
     setModalOpen(false);
   };
 
+  const contextValues = useMemo(
+    () => ({ isModalOpen, openModal, closeModal }),
+    [isModalOpen]
+  );
+
   return (
-    <ModalContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <ModalContext.Provider value={contextValues}>
       {children}
       <Modal open={isModalOpen} closeModal={closeModal}>
-        Prayer Modal Open
+        <PostPrayeForm closeModal={closeModal} />
       </Modal>
     </ModalContext.Provider>
   );

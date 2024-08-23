@@ -1,6 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
+import { revalidatePath } from "next/cache";
 import axios from "./axios";
 import { nextAuthOptions } from "./next-auth-options";
 
@@ -38,6 +39,21 @@ export async function getUsers<T>(
     return response.data.data as T;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function postPrayer(payload: Prayer) {
+  const session = await getServerSession(nextAuthOptions);
+  try {
+    const response = await axios.post("/prayer", payload, {
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+
+    revalidatePath("/dashboard");
+  } catch (error) {
     throw error;
   }
 }

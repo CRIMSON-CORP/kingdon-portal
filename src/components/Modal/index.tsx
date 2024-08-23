@@ -101,7 +101,7 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
   if (typeof window === "undefined") return null;
 
   return createPortal(
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {open ? (
         <motion.div
           layout
@@ -121,7 +121,7 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
                   onClick={closeModal}
                   className="size-12 -translate-y-full md:translate-y-0 md:translate-x-full bg-white rounded-full flex items-center justify-center shadow-xl"
                 >
-                  <Icon name="cancel" />
+                  <Icon name="close" size={32} />
                 </button>
               </motion.div>
               <motion.div
@@ -136,7 +136,9 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
             </LayoutGroup>
           </motion.div>
         </motion.div>
-      ) : null}
+      ) : (
+        <></>
+      )}
     </AnimatePresence>,
     document.body
   );

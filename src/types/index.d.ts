@@ -41,3 +41,9 @@ interface PaginationData {
   pages: number;
   offset: number;
 }
+
+interface Prayer {
+  title: string;
+  description: string;
+  image?: string;
+}

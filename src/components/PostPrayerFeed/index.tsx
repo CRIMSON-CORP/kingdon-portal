@@ -1,8 +1,14 @@
+"use client";
+import { usePostPrayerModal } from "@/contexts/PostPrayerModalProvider";
 import Image from "next/image";
 
 function PostPrayerFeed() {
+  const { openModal } = usePostPrayerModal();
   return (
-    <button className="p-6 bg-white rounded-[20px] border border-[#e7e7e7] gap-3.5 flex">
+    <button
+      onClick={openModal}
+      className="p-6 bg-white rounded-[20px] border border-[#e7e7e7] gap-3.5 flex"
+    >
       <Image
         src="/img/avatar.png"
         width={50}
