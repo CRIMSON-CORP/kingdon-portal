@@ -5,6 +5,7 @@ import { ChangeEvent, useEffect, useId, useState } from "react";
 import { FileDrop } from "react-file-drop";
 import toast from "react-hot-toast";
 import Icon from "../Icon";
+import Modal from "../Modal";
 import {
   Select,
   SelectContent,
@@ -14,6 +15,7 @@ import {
 } from "../ui/select";
 
 function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
+  const [prayerRequestSent, setPrayerRequestSent] = useState(false);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
@@ -32,7 +34,7 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
       return;
     }
 
-    const payload: Prayer = {
+    const payload: Pick<Prayer, "title" | "description" | "image"> = {
       title,
       description,
     };
@@ -43,78 +45,112 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
     toast.promise(postPrayer(payload), {
       loading: "Posting prayer...",
       success: () => {
-        closeModal();
+        setPrayerRequestSent(true);
         return "Prayer posted successfully";
       },
       error: "Failed to post prayer",
     });
   }
+
+  const complete = () => {
+    closeModal();
+    setPrayerRequestSent(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      <header className="flex items-center gap-3">
-        <Image
-          src="/img/avatar.png"
-          width={80}
-          height={80}
-          alt="avatar"
-          className="rounded-full"
-        />
-        <div className="flex flex-col gap-2.5">
-          <span className="text-[#020b23] text-xs">
-            <Select value="prayer">
-              <SelectTrigger className="px-4 py-2.5 bg-white rounded-[50px] border border-[#2967b3] text-[#2967b3] justify-center items-center gap-3 flex">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="prayer">Prayer</SelectItem>
-                <SelectItem value="testimony">Testimony</SelectItem>
-              </SelectContent>
-            </Select>
-          </span>
-          <p className="text-[#020b23] text-sm font-medium font-['Lexend Deca']">
-            Ashley789
-          </p>
-        </div>
-      </header>
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3">
-          <p>Subject</p>
-          <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
-            <textarea
-              name="title"
-              rows={1}
-              required
-              placeholder="Enter subject"
-              className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
-            ></textarea>
-            <Icon name="text" size={20} />
+    <>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <header className="flex items-center gap-3">
+          <Image
+            src="/img/avatar.png"
+            width={80}
+            height={80}
+            alt="avatar"
+            className="rounded-full"
+          />
+          <div className="flex flex-col gap-2.5">
+            <span className="text-[#020b23] text-xs">
+              <Select value="prayer">
+                <SelectTrigger className="px-4 py-2.5 bg-white rounded-[50px] border border-[#2967b3] text-[#2967b3] justify-center items-center gap-3 flex">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="prayer">Prayer</SelectItem>
+                  <SelectItem value="testimony">Testimony</SelectItem>
+                </SelectContent>
+              </Select>
+            </span>
+            <p className="text-[#020b23] text-sm font-medium font-['Lexend Deca']">
+              Ashley789
+            </p>
+          </div>
+        </header>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
+            <p>Subject</p>
+            <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
+              <textarea
+                name="title"
+                rows={1}
+                required
+                placeholder="Enter subject"
+                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
+              ></textarea>
+              <Icon name="text" size={20} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <p>Prayer request</p>
+            <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
+              <textarea
+                name="message"
+                rows={1}
+                required
+                placeholder="Write your prayer request"
+                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
+              ></textarea>
+              <Icon name="book" size={20} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <p>Add Image ( Max 2 MB )</p>
+            <FileDropWrapper />
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <p>Prayer request</p>
-          <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
-            <textarea
-              name="message"
-              rows={1}
-              required
-              placeholder="Write your prayer request"
-              className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
-            ></textarea>
-            <Icon name="book" size={20} />
+        <button
+          type="submit"
+          className="ml-auto w-full max-w-[203px] p-5 bg-[#2967b3] rounded-[10px] justify-center items-center gap-2.5 flex text-center text-white text-lg font-medium leading-none"
+        >
+          Post
+        </button>
+      </form>
+      <Modal open={prayerRequestSent} closeModal={complete}>
+        <div className="flex flex-col items-center text-center gap-6">
+          <Image
+            alt="prayer"
+            width={372.93}
+            height={311.02}
+            src="/img/pray-gif.gif"
+            className="w-full max-w-[372.93px] aspect-[372.93/311.02]"
+          />
+          <div className="flex flex-col gap-1.5">
+            <h3 className="text-[#020b23] text-lg font-medium">
+              Prayer request created
+            </h3>
+            <p className="text-center text-[#020b23] text-sm font-light text-balance">
+              Your prayer request has been created successfully now people can
+              pray with you Complete
+            </p>
           </div>
+          <button
+            onClick={complete}
+            className="px-[30px] py-5 bg-[#2967b3] rounded-[10px] justify-center items-center gap-[15px] flex text-center text-white text-base font-normal"
+          >
+            Complete
+          </button>
         </div>
-        <div className="flex flex-col gap-3">
-          <p>Add Image ( Max 2 MB )</p>
-          <FileDropWrapper />
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="ml-auto w-full max-w-[203px] p-5 bg-[#2967b3] rounded-[10px] justify-center items-center gap-2.5 flex text-center text-white text-lg font-medium leading-none"
-      >
-        Post
-      </button>
-    </form>
+      </Modal>
+    </>
   );
 }
 

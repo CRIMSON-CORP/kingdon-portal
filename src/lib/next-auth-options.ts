@@ -28,6 +28,7 @@ export const nextAuthOptions: NextAuthOptions = {
             return { ...responseData.user, token: responseData.token };
           } else throw response;
         } catch (error: any) {
+          console.log(error);
           throw new Error(error.response.data.message);
         }
       },

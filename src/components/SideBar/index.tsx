@@ -102,7 +102,9 @@ function SideBar() {
       <button className="p-4 bg-[#2967b3] rounded text-white text-sm font-semibold">
         Post
       </button>
-      <AsideContent title="Check Reports" content={completContent} />
+      {pathname.includes("admin") && (
+        <AsideContent title="Check Reports" content={completContent} />
+      )}
     </div>
   );
 }

@@ -43,7 +43,17 @@ interface PaginationData {
 }
 
 interface Prayer {
+  uuid: string;
+  created_at: string;
+  updated_at: string;
   title: string;
+  like_count: string;
+  comment_count: string;
+  praying_user_count: string;
   description: string;
+  user: User;
+  praying: null;
+  liked: number;
+  user_prayer_status: null;
   image?: string;
 }

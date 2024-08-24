@@ -1,4 +1,5 @@
 "use client";
+import { useModal } from "@/contexts/ModalProvider";
 import { AnimatePresence, LayoutGroup, Variants, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { MouseEventHandler, PropsWithChildren, useEffect } from "react";
@@ -24,13 +25,6 @@ const modalVariants: Variants = {
   },
 };
 
-const bodyAnimationConfig: KeyframeAnimationOptions = {
-  duration: 750,
-  easing: "cubic-bezier(.17,.67,.16,.99)",
-  fill: "forwards",
-  delay: 75,
-};
-
 interface ModalProps extends PropsWithChildren {
   open: boolean;
   closeModal: () => void;
@@ -38,52 +32,25 @@ interface ModalProps extends PropsWithChildren {
 
 function Modal({ open = false, children, closeModal }: ModalProps) {
   const pathname = usePathname();
+  const { setOpenModals } = useModal();
   const preventOutsideClick: MouseEventHandler = (e) => {
     e.stopPropagation();
   };
 
   useEffect(() => {
-    const hideBody = () => {
-      document.body.firstElementChild?.animate(
-        {
-          transform: "scale(0.8)",
-        },
-        bodyAnimationConfig
-      );
-      document.body.style.overflow = "hidden";
+    setOpenModals((prev) => prev + 1);
+
+    return () => {
+      setOpenModals((prev) => prev - 1);
     };
+  }, [setOpenModals]);
 
-    const showBody = () => {
-      document.body.firstElementChild?.animate(
-        {
-          transform: "scale(1)",
-        },
-        bodyAnimationConfig
-      );
-      document.body.style.overflow = "";
-    };
-
-    if (open) {
-      hideBody();
-    } else {
-      showBody();
-    }
-
+  useEffect(() => {
     window.addEventListener("modal-close-trigger", closeModal);
     return () => {
       window.removeEventListener("modal-close-trigger", closeModal);
     };
-  }, [closeModal, open]);
-
-  useEffect(() => {
-    document.body.firstElementChild?.animate(
-      {
-        transform: "scale(1)",
-      },
-      bodyAnimationConfig
-    );
-    document.body.style.overflow = "";
-  }, [pathname]);
+  }, [closeModal]);
 
   useEffect(() => {
     const closeModalOnEscape = (e: KeyboardEvent) => {
@@ -102,7 +69,7 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
 
   return createPortal(
     <AnimatePresence mode="wait">
-      {open ? (
+      {open && (
         <motion.div
           layout
           exit="initial"
@@ -136,8 +103,6 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
             </LayoutGroup>
           </motion.div>
         </motion.div>
-      ) : (
-        <></>
       )}
     </AnimatePresence>,
     document.body
