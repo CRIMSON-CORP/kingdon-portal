@@ -2,7 +2,7 @@
 import { donePraying, startPraying, toggleLike } from "@/lib/server-actions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { MutableRefObject, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import Icon from "../Icon";
 import TruncatedText from "../TruncatedText";
@@ -35,7 +35,8 @@ function PrayerCard({
   praying_user_count,
   praying,
   user_prayer_status,
-}: Prayer) {
+  removePrayer,
+}: Prayer & { removePrayer?: (prayerId: string) => void }) {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -69,6 +70,10 @@ function PrayerCard({
     setIsCommentOpen((prev) => !prev);
   }, []);
 
+  const handleRemovePrayer = () => {
+    removePrayer?.(uuid);
+  };
+
   return (
     <div
       ref={cardRef}
@@ -80,7 +85,7 @@ function PrayerCard({
             <Image
               width={50}
               height={50}
-              alt={user.unique_id}
+              alt={uuid}
               className="rounded-full"
               src={user.image_url || "/img/avatar.png"}
             />
@@ -133,7 +138,7 @@ function PrayerCard({
           </div>
           {userPrayingStatusButtonMap[user_prayer_status || ""]({
             uuid,
-            cardRef,
+            handleRemovePrayer,
           })}
         </div>
       </div>
@@ -157,20 +162,21 @@ export default PrayerCard;
 
 function PrayButton({
   uuid,
-  cardRef,
+  handleRemovePrayer,
 }: {
   uuid: string;
-  cardRef: MutableRefObject<HTMLDivElement | null>;
+  handleRemovePrayer: () => void;
 }) {
   const handleStartPraying = useCallback(() => {
     toast.promise(startPraying(uuid), {
       loading: "Praying...",
       success: () => {
+        handleRemovePrayer();
         return "Prayer request has been sent to your Prayer room";
       },
       error: "Something went wrong, please try again",
     });
-  }, [uuid]);
+  }, [handleRemovePrayer, uuid]);
 
   return (
     <button
@@ -184,27 +190,26 @@ function PrayButton({
 
 function DoneButton({
   uuid,
-  cardRef,
+  handleRemovePrayer,
 }: {
   uuid: string;
-  cardRef: MutableRefObject<HTMLDivElement | null>;
+  handleRemovePrayer: () => void;
 }) {
-  const handleStartPraying = useCallback(() => {
+  const handleDonePraying = useCallback(() => {
     toast.promise(donePraying(uuid), {
       loading: "finishing prayer...",
       success: () => {
+        handleRemovePrayer();
         return "Done Praying, Thank you!";
       },
       error: "Something went wrong, please try again",
     });
-  }, [uuid]);
+  }, [handleRemovePrayer, uuid]);
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <button className="py-2.5 px-8 bg-[#2967b3] rounded-[10px] text-[#f5fbfe] text-[13px] font-normal">
-          Done?
-        </button>
+      <AlertDialogTrigger className="py-2.5 px-8 bg-[#2967b3] rounded-[10px] text-[#f5fbfe] text-[13px] font-normal">
+        Done?
       </AlertDialogTrigger>
       <AlertDialogContent className="!rounded-[20px] m-5">
         <AlertDialogHeader>
@@ -228,7 +233,7 @@ function DoneButton({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
-            onClick={handleStartPraying}
+            onClick={handleDonePraying}
             className="px-[30px] py-5 bg-[#2967b3] rounded-[10px]"
           >
             Confirm

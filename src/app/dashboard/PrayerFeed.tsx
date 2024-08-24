@@ -23,10 +23,20 @@ function PrayerFeed({ initialPrayers }: PrayerFeedProps) {
     setPrayers((prev) => [...prev, ...apiPrayers]);
     setOffset((prev) => prev + 1);
   };
+
+  const removePrayer = (prayerId: string) => {
+    const newPrayers = [...prayers];
+    const index = newPrayers.findIndex((prayer) => prayer.uuid === prayerId);
+    if (index !== -1) {
+      newPrayers.splice(index, 1);
+      setPrayers(newPrayers);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3 h-full overflow-auto">
       {prayers.map((prayer) => (
-        <PrayerCard key={prayer.uuid} {...prayer} />
+        <PrayerCard key={prayer.uuid} {...prayer} removePrayer={removePrayer} />
       ))}
     </div>
   );

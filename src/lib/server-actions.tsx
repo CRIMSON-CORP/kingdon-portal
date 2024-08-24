@@ -135,6 +135,7 @@ export async function donePraying(prayer_uuid: string) {
         },
       }
     );
+    revalidatePath("/dashboard/prayer-room");
     return response.data.data;
   } catch (error) {
     console.log(error);
