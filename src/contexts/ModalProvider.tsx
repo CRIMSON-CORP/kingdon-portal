@@ -31,24 +31,31 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    const { body } = document;
+    const { firstElementChild } = body;
+
+    if (!firstElementChild || !(firstElementChild instanceof HTMLElement))
+      return;
+
+    firstElementChild.style.transformOrigin = "50% 50vh";
     const hideBody = () => {
-      document.body.firstElementChild?.animate(
+      firstElementChild.animate(
         {
           transform: "scale(0.8)",
         },
         bodyAnimationConfig
       );
-      document.body.style.overflow = "hidden";
+      body.style.overflow = "hidden";
     };
 
     const showBody = () => {
-      document.body.firstElementChild?.animate(
+      body.firstElementChild?.animate(
         {
           transform: "scale(1)",
         },
         bodyAnimationConfig
       );
-      document.body.style.overflow = "";
+      body.style.overflow = "";
     };
 
     if (openModals > 1) {

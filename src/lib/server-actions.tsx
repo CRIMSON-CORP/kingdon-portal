@@ -55,6 +55,7 @@ export async function postPrayer(
     });
 
     revalidatePath("/dashboard");
+    console.log("should have revalidated path");
   } catch (error) {
     throw error;
   }
@@ -96,7 +97,6 @@ export async function toggleLike(params: { prayerId: string; like: boolean }) {
         },
       }
     );
-
     return response.data.data;
   } catch (error) {
     console.log(error);
@@ -116,7 +116,25 @@ export async function startPraying(prayer_uuid: string) {
         },
       }
     );
-    console.log(response.data.data);
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function donePraying(prayer_uuid: string) {
+  try {
+    const session = await getServerSession(nextAuthOptions);
+    const response = await axios.patch(
+      "/prayer/done-praying",
+      { prayer_uuid },
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user?.token}`,
+        },
+      }
+    );
     return response.data.data;
   } catch (error) {
     console.log(error);

@@ -1,6 +1,6 @@
+import ListPagination from "@/components/ListPagination";
 import { getUsers } from "@/lib/server-actions";
 import Image from "next/image";
-import ListPagination from "./Pagination";
 
 async function page({ searchParams }: PageProps) {
   const params = { ...searchParams };

@@ -1,14 +1,19 @@
 "use client";
 import PrayerCard from "@/components/PrayerCard";
 import { getPrayers } from "@/lib/server-actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface PrayerFeedProps {
   initialPrayers: Prayer[];
 }
 function PrayerFeed({ initialPrayers }: PrayerFeedProps) {
   const [offset, setOffset] = useState(0);
-  const [prayers, setPrayers] = useState<Prayer[]>(initialPrayers);
+  const [prayers, setPrayers] = useState<Prayer[]>([]);
+
+  useEffect(() => {
+    setPrayers(initialPrayers);
+    setOffset(0);
+  }, [initialPrayers]);
 
   const loadMorePrayers = async () => {
     const apiPrayers = await getPrayers<Prayer[]>({
