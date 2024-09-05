@@ -1,13 +1,23 @@
-import PrayerRequestCard from "@/components/PrayerCard/PrayerRequestCard";
-import TestimonyCard from "@/components/TestimonyCard";
+import { getPrayers, getTestimonies } from "@/lib/server-actions";
+import PrayerFeed from "./PrayerFeed";
+import TestimonyFeed from "./TestimonyFeed";
 
-function page({ searchParams }: PageProps) {
+async function page({ searchParams }: PageProps) {
   const { page } = searchParams;
-  return (
-    <div>
-      {page === "testimonies" ? <TestimonyCard /> : <PrayerRequestCard />}
-    </div>
-  );
+  if (page === "testimonies") {
+    const testimonies = await getTestimonies<{
+      data: Testimony[];
+    }>({
+      self: "self",
+      page: 1,
+    });
+    return <TestimonyFeed testimonies={testimonies.data} />;
+  }
+  const prayers = await getPrayers<{ data: Prayer[] }>({
+    owner: "self",
+    page: "1",
+  });
+  return <PrayerFeed prayers={prayers.data} />;
 }
 
 export default page;
