@@ -56,4 +56,24 @@ interface Prayer {
   liked: number;
   user_prayer_status: null;
   image?: string;
+  mode: "request" | "prayer";
+}
+
+interface UserLike {
+  id: number;
+  uuid: string;
+  created_at: string;
+}
+
+interface Testimony {
+  id: number;
+  uuid: string;
+  description: string;
+  comment_count: string;
+  like_count: string;
+  praying_user_count: number | null;
+  user: User;
+  prayer: Prayer;
+  liked: string;
+  mode: "request" | "prayer";
 }
