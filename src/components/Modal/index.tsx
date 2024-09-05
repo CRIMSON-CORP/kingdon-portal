@@ -38,12 +38,16 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
   };
 
   useEffect(() => {
-    setOpenModals((prev) => prev + 1);
+    if (open) {
+      setOpenModals((prev) => prev + 1);
+    }
 
     return () => {
-      setOpenModals((prev) => prev - 1);
+      if (open) {
+        setOpenModals((prev) => prev - 1);
+      }
     };
-  }, [setOpenModals]);
+  }, [open, setOpenModals]);
 
   useEffect(() => {
     window.addEventListener("modal-close-trigger", closeModal);

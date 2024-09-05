@@ -32,7 +32,7 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const { body } = document;
-    const { firstElementChild } = body;
+    const firstElementChild = document.querySelector("body > .first");
 
     if (!firstElementChild || !(firstElementChild instanceof HTMLElement))
       return;
@@ -58,7 +58,7 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
       body.style.overflow = "";
     };
 
-    if (openModals > 1) {
+    if (openModals >= 1) {
       hideBody();
     } else {
       showBody();
