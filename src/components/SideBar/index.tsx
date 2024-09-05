@@ -1,4 +1,5 @@
 "use client";
+import { usePostPrayerModal } from "@/contexts/PostPrayerModalProvider";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import AsideContent from "../AsideContent";
@@ -99,9 +100,7 @@ function SideBar() {
           </div>
         </div>
       </div>
-      <button className="p-4 bg-[#2967b3] rounded text-white text-sm font-semibold">
-        Post
-      </button>
+      <PostPrayerButton />
       {pathname.includes("admin") && (
         <AsideContent title="Check Reports" content={completContent} />
       )}
@@ -110,3 +109,15 @@ function SideBar() {
 }
 
 export default SideBar;
+
+function PostPrayerButton() {
+  const { openModal } = usePostPrayerModal();
+  return (
+    <button
+      onClick={openModal}
+      className="p-4 bg-[#2967b3] rounded text-white text-sm font-semibold"
+    >
+      Post
+    </button>
+  );
+}
