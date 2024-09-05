@@ -104,6 +104,32 @@ export async function toggleLike(params: { prayerId: string; like: boolean }) {
   }
 }
 
+export async function toggleLikeTestimony(params: {
+  prayerId: string;
+  like: boolean;
+}) {
+  try {
+    const session = await getServerSession(nextAuthOptions);
+    const method = params.like ? "post" : "patch";
+    const urlBack = params.like ? "like" : "unlike";
+    const response = await axios[method](
+      `/like/${urlBack}-testimony`,
+      {
+        testimony_uuid: params.prayerId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user?.token}`,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function startPraying(prayer_uuid: string) {
   try {
     const session = await getServerSession(nextAuthOptions);
@@ -139,6 +165,98 @@ export async function donePraying(prayer_uuid: string) {
     return response.data.data;
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+export async function getLikes<T>(
+  prayer_uuid: string,
+  page: number
+): Promise<T> {
+  try {
+    const session = await getServerSession(nextAuthOptions);
+    const response = await axios.get("/user/liked-prayer", {
+      params: {
+        prayer_uuid,
+        page,
+        size: parseInt(process.env.NEXT_PUBLIC_PAGINATION_PAGE_SIZE || "10"),
+      },
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+    return response.data.data.data as T;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+export async function getChosen<T>(
+  prayer_uuid: string,
+  page: number
+): Promise<T> {
+  try {
+    const session = await getServerSession(nextAuthOptions);
+    const response = await axios.get("/user/chose-prayer", {
+      params: {
+        prayer_uuid,
+        page,
+        size: parseInt(process.env.NEXT_PUBLIC_PAGINATION_PAGE_SIZE || "10"),
+      },
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+    return response.data.data.data as T;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getTestimonies<T>({
+  self,
+  page,
+}: {
+  self: "self" | "others";
+  page: number;
+}) {
+  try {
+    const session = await getServerSession(nextAuthOptions);
+    const response = await axios.get("/testimony", {
+      params: {
+        page,
+        self,
+        size: parseInt(process.env.NEXT_PUBLIC_PAGINATION_PAGE_SIZE || "10"),
+      },
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+    return response.data.data as T;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function postTestimony(
+  payload: Pick<Prayer, "uuid" | "title" | "description" | "image">
+) {
+  const session = await getServerSession(nextAuthOptions);
+  try {
+    const response = await axios.post(
+      "/testimony",
+      { prayer_uuid: payload.uuid, testimony: payload.description },
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user?.token}`,
+        },
+      }
+    );
+
+    revalidatePath("/dashboard");
+  } catch (error) {
     throw error;
   }
 }
