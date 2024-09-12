@@ -29,7 +29,7 @@ export const nextAuthOptions: NextAuthOptions = {
           } else throw response;
         } catch (error: any) {
           console.log(error);
-          throw new Error(error.response.data.message);
+          throw new Error(error.response?.data?.message || error.message);
         }
       },
     }),
