@@ -110,7 +110,7 @@ function PrayerCard({
   return (
     <div
       ref={cardRef}
-      className="rounded-[20px] border border-[#e7e7e7] overflow-hidden"
+      className="rounded-[20px] border border-[#e7e7e7] overflow-hidden flex-none"
     >
       <div className="bg-white p-6 flex-col gap-2.5 flex">
         <header className="flex items-center justify-between gap-5">

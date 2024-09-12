@@ -37,7 +37,7 @@ function Aside() {
   return (
     <aside
       data-can-show={canShowAsidebar}
-      className="flex-col gap-6 data-[can-show='true']:flex hidden"
+      className="flex-col gap-6 data-[can-show='true']:flex hidden h-full overflow-auto scrollable"
     >
       <AsideContent title="Let's Complete" content={completContent} />
       <AsideContent title="Trending Prayer Requests" content={completContent} />

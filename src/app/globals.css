@@ -29,3 +29,16 @@
     text-wrap: balance;
   }
 }
+
+.scrollable {
+  padding-right: 8px;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  width: 8px;
+  border-radius: 20px;
+  background-color: rgb(223, 223, 223);
+}

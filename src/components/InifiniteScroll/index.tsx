@@ -67,8 +67,7 @@ function InfiniteScroll<T>({
           }
         },
         {
-          root: observerRoot.current,
-          rootMargin: "0px 0px 200px 0px",
+          rootMargin: "200px 0px",
           threshold: 0.1,
         }
       );
@@ -86,12 +85,20 @@ function InfiniteScroll<T>({
   }, [data]);
 
   if (typeof children === "function") {
-    return children({
-      isPending,
-      error,
-      data: collapsedData,
-      refetch,
-    });
+    return (
+      <>
+        {children({
+          isPending,
+          error,
+          data: collapsedData,
+          refetch,
+        })}
+        <div
+          ref={observeElement}
+          style={{ height: "120px", flex: "none" }}
+        ></div>
+      </>
+    );
   } else {
     return children;
   }

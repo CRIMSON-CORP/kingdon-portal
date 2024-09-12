@@ -7,9 +7,9 @@ async function page({ searchParams }: PageProps) {
   const prayersData = await getPrayers<{ data: Prayer[] }>(params);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 h-full overflow-auto scrollable">
       <PostPrayerFeed />
-      <PrayerFeed initialPrayers={prayersData.data} />
+      <PrayerFeed initialPrayers={prayersData.data} params={params} />
     </div>
   );
 }
