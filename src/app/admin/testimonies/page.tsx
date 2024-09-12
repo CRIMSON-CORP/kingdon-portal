@@ -1,12 +1,11 @@
 import { DatePickerWithRange } from "@/components/DatePicker";
 import PostPrayerFeed from "@/components/PostPrayerFeed";
-import TestimonyCard from "@/components/TestimonyCard";
 function page() {
   return (
     <>
       <PostPrayerFeed />
       <DateRangeFilter />
-      <TestimonyCard />
+      {/* <TestimonyCard /> */}
     </>
   );
 }
