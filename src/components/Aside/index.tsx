@@ -29,20 +29,25 @@ const completContent: AsideContent[] = [
 
 function Aside() {
   const pathname = usePathname();
-  const URLSWhereCannotShowAsideBar = ["settings"];
+  const URLSWhereCannotShowAsideBar = ["settings", "profile"];
   const canShowAsidebar = !URLSWhereCannotShowAsideBar.includes(
     pathname.split("/")[2]
   );
 
   return (
-    <aside
-      data-can-show={canShowAsidebar}
-      className="flex-col gap-6 data-[can-show='true']:flex hidden h-full overflow-auto scrollable"
-    >
-      <AsideContent title="Let's Complete" content={completContent} />
-      <AsideContent title="Trending Prayer Requests" content={completContent} />
-      <AsidePostButton />
-    </aside>
+    <div className="lg:flex hidden overflow-auto scrollable">
+      <aside
+        data-can-show={canShowAsidebar}
+        className="flex-col gap-6 data-[can-show='true']:flex hidden h-full"
+      >
+        <AsideContent title="Let's Complete" content={completContent} />
+        <AsideContent
+          title="Trending Prayer Requests"
+          content={completContent}
+        />
+        <AsidePostButton />
+      </aside>
+    </div>
   );
 }
 

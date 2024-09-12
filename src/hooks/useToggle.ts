@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export interface IUseToggle {
   value: boolean;
@@ -10,10 +10,10 @@ export interface IUseToggle {
 function useToggle(initialValue = false): IUseToggle {
   const [value, setValue] = useState(initialValue);
 
-  const toggle = () => setValue((prev) => !prev);
+  const toggle = useCallback(() => setValue((prev) => !prev), []);
 
-  const open = () => setValue(true);
-  const close = () => setValue(false);
+  const open = useCallback(() => setValue(true), []);
+  const close = useCallback(() => setValue(false), []);
 
   return { value, toggle, open, close };
 }

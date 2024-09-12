@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="col-span-2 flex flex-col gap-6">
+    <div className="lg:col-span-2 flex flex-col gap-6">
       <div className="bg-white rounded-[20px] border border-[#e7e7e7] py-9 px-12 text-[#020b23] flex flex-col gap-5">
         <div className="flex items-center gap-8">
           <div className="relative">
