@@ -94,8 +94,6 @@ function ProfileBar() {
     close();
   }, [pathname, close]);
 
-  console.log(value);
-
   return (
     <div className="flex items-center gap-6">
       <Icon name="search" />

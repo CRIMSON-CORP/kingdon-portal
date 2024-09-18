@@ -9,6 +9,7 @@ import {
   toggleLike,
 } from "@/lib/server-actions";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -76,6 +77,10 @@ function PrayerCard({
 
   const [localLiked, setLocalLiked] = useState({ liked, like_count });
 
+  const [commentList, setCommentList] = useState<
+    Partial<PrayerComment>[] | null
+  >(null);
+
   const toggleLocalLike = useCallback(async () => {
     try {
       if (localLiked.liked === 1) {
@@ -106,6 +111,21 @@ function PrayerCard({
   const handleRemovePrayer = () => {
     removePrayer?.(uuid);
   };
+
+  const fetchComments = useCallback(async () => {
+    try {
+      const respone = await axios.get<{ data: PrayerComment[] }>(
+        `/api/prayer/comment/${uuid}`
+      );
+      setCommentList(respone.data.data);
+    } catch (error) {
+      toast.error("Failed to load comments");
+    }
+  }, [uuid]);
+
+  useEffect(() => {
+    if (isCommentOpen) fetchComments();
+  }, [fetchComments, isCommentOpen]);
 
   return (
     <div
@@ -182,8 +202,8 @@ function PrayerCard({
       </div>
       {isCommentOpen ? (
         <>
-          <CommentForm />
-          <CommentList />
+          <CommentForm uuid={uuid} setCommentList={setCommentList} />
+          {commentList && <CommentList commentList={commentList} />}
         </>
       ) : null}
     </div>

@@ -77,3 +77,28 @@ interface Testimony {
   liked: string;
   mode: "request" | "prayer";
 }
+
+interface PrayerComment {
+  id: string;
+  comment: string;
+  user: {
+    created_at: string;
+    deleted_at: string | null;
+    description: string | null;
+    email: string | null;
+    id: number | string;
+    image_url: string | null;
+    status: "free";
+    unique_id: string;
+    updated_at: string;
+    uuid: string;
+  };
+  created_at: string;
+
+  deleted_at: string | null;
+  id: number;
+  replies: PrayerComment[];
+  title: string;
+  updated_at: string;
+  uuid: string;
+}

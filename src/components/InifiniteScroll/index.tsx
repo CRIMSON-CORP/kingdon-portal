@@ -57,8 +57,6 @@ function InfiniteScroll<T>({
     if (observeElement.current) {
       observer = new IntersectionObserver(
         (entries) => {
-          console.log(entries[0].isIntersecting);
-
           if (
             entries[0].target === observeElement.current &&
             entries[0].isIntersecting
