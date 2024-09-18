@@ -33,8 +33,10 @@ function Form() {
       if (status !== 200) throw new Error(data.message);
       else {
         setRequestStatus("success");
-        toast.success("Signup Successful, Please login to continue.");
-        push("/auth/login");
+        toast.success(
+          "Signup Successful, Please verify your email to continue."
+        );
+        push(`/auth/verify-email?email=${username}`);
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message?.join(",") || error.message);
