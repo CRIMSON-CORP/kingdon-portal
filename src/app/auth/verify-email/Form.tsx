@@ -32,7 +32,7 @@ function Form() {
       return;
     }
 
-    if (otp.toString().length < 4) {
+    if (otp.toString().length < 6) {
       toast.error("Invalid OTP");
       return;
     }
@@ -116,6 +116,14 @@ function Form() {
         />
         <InputOTPSlot
           index={3}
+          className="w-[77px] h-[50px] bg-[#f8f9f9] !rounded border-t-0 border-r-0 !border-l-0 border-solid !border-[#E7E7E7] border-b-2 valid:border-b-[#2967B3]"
+        />
+        <InputOTPSlot
+          index={4}
+          className="w-[77px] h-[50px] bg-[#f8f9f9] !rounded border-t-0 border-r-0 !border-l-0 border-solid !border-[#E7E7E7] border-b-2 valid:border-b-[#2967B3]"
+        />
+        <InputOTPSlot
+          index={5}
           className="w-[77px] h-[50px] bg-[#f8f9f9] !rounded border-t-0 border-r-0 !border-l-0 border-solid !border-[#E7E7E7] border-b-2 valid:border-b-[#2967B3]"
         />
       </InputOTP>
