@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import NavBar from "./NavBar";
+import SignOut from "./SignOutButton";
 
 export default function RootLayout({
   children,
@@ -46,7 +47,7 @@ export default function RootLayout({
             love and grace. 🙏✨
           </p>
         </div>
-        <nav className="flex items-center gap-5">
+        <nav className="flex items-center flex-wrap gap-5">
           <Link
             href="/dashboard/settings"
             className="p-4 bg-[#fbfbfb] rounded border border-[#e7e7e7] w-full max-w-[163px] text-center text-sm font-normal"
@@ -59,6 +60,7 @@ export default function RootLayout({
           >
             Invite Friends
           </Link>
+          <SignOut />
         </nav>
       </div>
       <div className="flex items-center justify-between">
