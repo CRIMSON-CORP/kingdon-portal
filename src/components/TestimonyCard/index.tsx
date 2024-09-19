@@ -65,7 +65,7 @@ function TestimonyCard({
   const fetchComments = useCallback(async () => {
     try {
       const respone = await axios.get<{ data: PrayerComment[] }>(
-        `/api/prayer/comment/${uuid}`
+        `/api/testimony/comment/${uuid}`
       );
       setCommentList(respone.data.data);
     } catch (error) {
