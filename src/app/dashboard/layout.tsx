@@ -24,9 +24,9 @@ export default async function RootLayout({
 
   return (
     <Providers>
-      <div className="first flex flex-col gap-10 h-screen">
+      <div className="first flex flex-col h-screen">
         <Header />
-        <div className="container grid grid-cols-1 md:grid-cols-[minmax(0px,326px)_1fr] lg:grid-cols-[minmax(0px,326px)_1fr_minmax(0px,326px)] gap-8 overflow-auto">
+        <div className="container grid grid-cols-1 md:grid-cols-[minmax(0px,326px)_1fr] lg:grid-cols-[minmax(0px,326px)_1fr_minmax(0px,326px)] gap-8 overflow-auto pt-10 scrollable">
           <SideBar />
           {children}
           <Aside />
