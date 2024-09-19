@@ -98,7 +98,7 @@ function Modal({ open = false, children, closeModal }: ModalProps) {
               <motion.div
                 layout
                 onClick={preventOutsideClick}
-                className="relative bg-white p-3 pt-10 rounded-xl max-h-[80vh] overflow-x-clip overflow-y-auto shadow-form-card w-full"
+                className="relative bg-white p-3 pt-10 rounded-xl max-h-[80vh] overflow-x-clip overflow-y-auto shadow-form-card w-full scrollable"
               >
                 <motion.div layout className="sm:p-3 flex flex-col gap-10">
                   {children}
