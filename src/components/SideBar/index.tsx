@@ -40,7 +40,7 @@ function SideBar() {
     <div className="hidden md:block">
       <div
         data-can-show={canShowSidebar}
-        className="flex-col gap-4 data-[can-show='true']:flex hidden md:flex self-start"
+        className="flex-col gap-4 data-[can-show='true']:flex hidden md:flex self-start sticky top-0"
       >
         <div className="bg-white rounded-[20px] border border-[#e7e7e7] flex-col py-5">
           <div className="flex flex-col gap-4 px-4">
