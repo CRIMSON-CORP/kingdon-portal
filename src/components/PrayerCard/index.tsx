@@ -586,7 +586,7 @@ function SendTestimony({
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const title = formData.get("title") as string;
-    const description = formData.get("message") as string;
+    const description = formData.get("testimony") as string;
     const image = formData.get("media") as string;
 
     // make only title and description required
@@ -624,6 +624,14 @@ function SendTestimony({
     closeModal();
     setTestimonyRequestSent(false);
     push("/dashboard/profile?page=testimonies");
+  };
+
+  const onTestimonyInput: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    e
+  ) => {
+    const target = e.target as HTMLTextAreaElement;
+    target.style.height = "auto";
+    target.style.height = target.scrollHeight + "px";
   };
   return (
     <>
@@ -667,35 +675,23 @@ function SendTestimony({
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-3">
-            <p>Subject</p>
+            <p>Testimony</p>
             <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
               <textarea
-                name="title"
+                name="testimony"
                 rows={1}
                 required
-                placeholder="Enter subject"
-                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
-              ></textarea>
-              <Icon name="text" size={20} />
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <p>Prayer request</p>
-            <div className="flex items-center gap-2 border-b border-[#f3f4f5]">
-              <textarea
-                name="message"
-                rows={1}
-                required
-                placeholder="Write your prayer request"
-                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
+                onInput={onTestimonyInput}
+                placeholder="Write your testimony"
+                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none max-h-[30vh] scrollable"
               ></textarea>
               <Icon name="book" size={20} />
             </div>
           </div>
-          <div className="flex flex-col gap-3">
+          {/* <div className="flex flex-col gap-3">
             <p>Add Image ( Max 2 MB )</p>
             <FileDropWrapper />
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

@@ -57,6 +57,12 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
     setPrayerRequestSent(false);
   };
 
+  const onPrayerInput: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    const target = e.target as HTMLTextAreaElement;
+    target.style.height = "auto";
+    target.style.height = target.scrollHeight + "px";
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -94,7 +100,8 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
                 rows={1}
                 required
                 placeholder="Enter subject"
-                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
+                onInput={onPrayerInput}
+                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none max-h-[10vh] scrollable"
               ></textarea>
               <Icon name="text" size={20} />
             </div>
@@ -107,7 +114,8 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
                 rows={1}
                 required
                 placeholder="Write your prayer request"
-                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none"
+                onInput={onPrayerInput}
+                className="flex-1 placeholder:text-sm placeholder:font-extralight outline-none max-h-[10vh] scrollable"
               ></textarea>
               <Icon name="book" size={20} />
             </div>
