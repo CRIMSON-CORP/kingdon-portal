@@ -72,7 +72,7 @@ function Form() {
         disabled={requestStatus !== "idle"}
         className="p-5 bg-[#2967b3] rounded-[10px] justify-center items-center gap-2.5 flex text-center text-white text-base font-medium leading-tight"
       >
-        {requestStatus !== "idle" ? "Siging up..." : "Login"}
+        {requestStatus !== "idle" ? "Siging up..." : "Create Account"}
       </button>
     </form>
   );
