@@ -11,6 +11,7 @@ async function page() {
     self: "self",
     page: 1,
   });
+
   return (
     <>
       <PostPrayerFeed />

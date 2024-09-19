@@ -3,8 +3,6 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import Icon from "../Icon";
 import TruncatedText from "../TruncatedText";
-import CommentForm from "./../Comment/CommentForm";
-import CommentList from "./../Comment/CommentList";
 
 function PrayerRequestCard() {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -71,8 +69,8 @@ function PrayerRequestCard() {
       </div>
       {isCommentOpen ? (
         <>
-          <CommentForm />
-          <CommentList />
+          {/* <CommentForm />
+          <CommentList /> */}
         </>
       ) : null}
     </div>

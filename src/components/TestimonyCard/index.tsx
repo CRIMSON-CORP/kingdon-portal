@@ -2,8 +2,10 @@
 import useToggle from "@/hooks/useToggle";
 import { getChosen, toggleLikeTestimony } from "@/lib/server-actions";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import CommentForm from "../Comment/CommentForm";
 import CommentList from "../Comment/CommentList";
 import Icon from "../Icon";
@@ -28,6 +30,10 @@ function TestimonyCard({
     liked: +liked,
     like_count: +like_count,
   });
+
+  const [commentList, setCommentList] = useState<
+    Partial<PrayerComment>[] | null
+  >(null);
 
   const toggleLocalLike = useCallback(async () => {
     try {
@@ -55,6 +61,22 @@ function TestimonyCard({
   const toggleCommentOpen = useCallback(() => {
     setIsCommentOpen((prev) => !prev);
   }, []);
+
+  const fetchComments = useCallback(async () => {
+    try {
+      const respone = await axios.get<{ data: PrayerComment[] }>(
+        `/api/prayer/comment/${uuid}`
+      );
+      setCommentList(respone.data.data);
+    } catch (error) {
+      toast.error("Failed to load comments");
+    }
+  }, [uuid]);
+
+  useEffect(() => {
+    if (isCommentOpen) fetchComments();
+  }, [fetchComments, isCommentOpen]);
+
   return (
     <div className="rounded-[20px] border border-[#e7e7e7] overflow-hidden">
       <div className="bg-white py-6 flex-col gap-2.5 flex">
@@ -119,8 +141,14 @@ function TestimonyCard({
       </div>
       {isCommentOpen ? (
         <>
-          <CommentForm />
-          <CommentList />
+          <CommentForm
+            card="testimony"
+            uuid={uuid}
+            setCommentList={setCommentList}
+          />
+          {commentList && (
+            <CommentList commentList={commentList} card="testimony" />
+          )}
         </>
       ) : null}
     </div>

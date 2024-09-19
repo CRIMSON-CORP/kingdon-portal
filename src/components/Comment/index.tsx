@@ -11,7 +11,8 @@ function Comment({
   replies,
   mode,
   comment,
-}: Partial<PrayerComment> & { mode?: "reply" }) {
+  card,
+}: Partial<PrayerComment> & { mode?: "reply"; card?: "prayer" | "testimony" }) {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [replyList, setReplyList] = useState<Partial<PrayerComment>[] | null>(
     replies || []
@@ -61,10 +62,13 @@ function Comment({
                 setCommentList={setReplyList}
                 mode="reply"
                 commnetUuid={uuid}
+                card={card}
               />
             </>
           ) : null}
-          {replyList && <CommentList mode="reply" commentList={replyList} />}
+          {replyList && (
+            <CommentList mode="reply" commentList={replyList} card={card} />
+          )}
         </>
       )}
     </div>

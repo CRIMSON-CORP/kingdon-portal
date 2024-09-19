@@ -7,11 +7,13 @@ import toast from "react-hot-toast";
 function CommentForm({
   uuid,
   mode,
+  card,
   setCommentList,
   commnetUuid,
 }: {
   uuid: string;
   mode?: "reply";
+  card?: "prayer" | "testimony";
   commnetUuid?: string | undefined;
   setCommentList: Dispatch<SetStateAction<Partial<PrayerComment>[] | null>>;
 }) {
@@ -41,10 +43,14 @@ function CommentForm({
       } else {
         response = await axios.post(`/api/prayer/comment/${uuid}`, {
           description: comment,
-          prayer_uuid: uuid,
+          ...(card === "testimony"
+            ? { testimony_uuid: uuid }
+            : { prayer_uuid: uuid }),
         });
       }
       const { data } = response.data;
+      console.log(data, "response");
+
       setCommentList((prev) =>
         prev
           ? [
@@ -53,6 +59,7 @@ function CommentForm({
                 created_at: data.created_at,
                 id: data.id,
                 user: data.user,
+                uuid: data.uuid,
               },
               ...prev,
             ]

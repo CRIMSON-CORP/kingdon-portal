@@ -6,11 +6,15 @@ const countformatter = Intl.NumberFormat("en-US", {
 function CommentList({
   commentList,
   mode,
+  card,
 }: {
   mode?: "reply";
+  card?: "prayer" | "testimony";
   commentList: Partial<PrayerComment>[];
 }) {
-  console.log(commentList);
+  if (commentList.length === 0) {
+    return <></>;
+  }
 
   return (
     <div className="px-6 py-3.5 bg-[#F6F7F8] flex flex-col gap-4 max-h-96 overflow-x-auto">
@@ -20,7 +24,7 @@ function CommentList({
         </header>
       )}
       {commentList.map((comment) => (
-        <Comment key={comment.id} {...comment} mode={mode} />
+        <Comment key={comment.id} {...comment} mode={mode} card={card} />
       ))}
     </div>
   );
