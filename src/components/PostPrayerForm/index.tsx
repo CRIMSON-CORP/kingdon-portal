@@ -120,10 +120,10 @@ function PostPrayeForm({ closeModal }: { closeModal: () => void }) {
               <Icon name="book" size={20} />
             </div>
           </div>
-          <div className="flex flex-col gap-3">
+          {/* <div className="flex flex-col gap-3">
             <p>Add Image ( Max 2 MB )</p>
             <FileDropWrapper />
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

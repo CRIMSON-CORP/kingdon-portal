@@ -156,13 +156,13 @@ function PrayerCard({
         <p>
           <TruncatedText content={description} />
         </p>
-        <Image
+        {/* <Image
           width={606}
           height={238}
           alt="avatar"
           src="/img/feed-image.png"
           className="rounded-[10px] object-cover object-center w-full h-auto"
-        />
+        /> */}
         <div className="flex justify-between gap-4">
           <div className="flex items-center gap-4">
             <button

@@ -104,13 +104,13 @@ function TestimonyCard({
         <p className="text-[#020b23] text-xs font-light px-6">
           <TruncatedText content={description} />
         </p>
-        <Image
+        {/* <Image
           width={606}
           height={238}
           alt="avatar"
           src="/img/feed-image.png"
           className="rounded-[10px] object-cover object-center w-full h-auto px-6"
-        />
+        /> */}
         <div className="flex items-center gap-4 justify-between px-6">
           <button onClick={toggleLocalLike} className="flex items-center gap-1">
             <Icon
