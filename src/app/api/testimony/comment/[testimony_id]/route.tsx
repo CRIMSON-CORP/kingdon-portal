@@ -4,14 +4,14 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 type Params = {
-  prayer_id: string;
+  testimony_id: string;
 };
 
 async function GET(req: Request, ctx: { params: Params }) {
   const session = await getServerSession(nextAuthOptions);
   try {
     const response = await backendAxios.get(
-      `/comment/prayer/${ctx.params.prayer_id}`,
+      `/comment/testimony/${ctx.params.testimony_id}`,
       {
         headers: {
           Authorization: `Bearer ${session?.user?.token}`,
