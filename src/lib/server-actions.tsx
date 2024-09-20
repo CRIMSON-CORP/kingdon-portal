@@ -276,3 +276,19 @@ export async function getDashboardData<T>(path?: string) {
     throw error;
   }
 }
+
+export async function getAdminDashboardData<T>(path?: string) {
+  const session = await getServerSession(nextAuthOptions);
+  try {
+    const response = await axios.get("/user/admin-dashboard", {
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+
+    path && revalidatePath(path);
+    return response.data.data as T;
+  } catch (error) {
+    throw error;
+  }
+}
