@@ -29,12 +29,24 @@ const completContent: AsideContent[] = [
   },
 ];
 
-function SideBar() {
+const numberFormatter = Intl.NumberFormat("en-US", {
+  compactDisplay: "short",
+});
+
+function SideBar({ dashboardData }: { dashboardData: UserDashboard }) {
   const pathname = usePathname();
   const URLSWhereCannotShowSideBar = ["profile", "settings"];
   const canShowSidebar = !URLSWhereCannotShowSideBar.includes(
     pathname.split("/")[2]
   );
+
+  const {
+    user,
+    prayer_count,
+    testimony_count,
+    chosen_prayer_count,
+    completed_prayer_count,
+  } = dashboardData;
 
   return (
     <div className="hidden md:block">
@@ -46,15 +58,15 @@ function SideBar() {
           <div className="flex flex-col gap-4 px-4">
             <div className="flex flex-col items-center gap-2">
               <Image
-                src="/img/avatar.png"
+                src={user.image_url || "/img/avatar.png"}
                 width={100}
                 height={100}
                 quality={100}
-                alt="avatar"
+                alt={user.unique_id}
                 className="rounded-full"
               />
               <span className="text-[#020b23] text-sm font-medium">
-                Adebimpe Ashley
+                {user.unique_id}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -62,14 +74,18 @@ function SideBar() {
                 <Icon name="book" size={20} />
                 <span>My Prayer Requests</span>
               </div>
-              <span className=" text-[#020b23]">10</span>
+              <span className=" text-[#020b23]">
+                {numberFormatter.format(prayer_count)}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-[#808591] text-sm">
                 <Icon name="speaker" size={20} />
                 <span>Testimonies</span>
               </div>
-              <span className=" text-[#020b23]">5</span>
+              <span className=" text-[#020b23]">
+                {numberFormatter.format(testimony_count)}
+              </span>
             </div>
           </div>
           <hr className="border-[#e7e7e7] my-5" />
@@ -83,7 +99,7 @@ function SideBar() {
                     Total Chosen
                   </span>
                   <span className="text-[#020b23] text-xs font-medium leading-none">
-                    1500
+                    {numberFormatter.format(chosen_prayer_count)}
                   </span>
                 </div>
               </div>
@@ -94,7 +110,7 @@ function SideBar() {
                     Completed
                   </span>
                   <span className="text-[#020b23] text-xs font-medium leading-none">
-                    1450
+                    {numberFormatter.format(completed_prayer_count)}
                   </span>
                 </div>
               </div>
