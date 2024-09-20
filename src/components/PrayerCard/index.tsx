@@ -109,7 +109,10 @@ function PrayerCard({
   }, []);
 
   const handleRemovePrayer = () => {
-    removePrayer?.(uuid);
+    // removePrayer?.(uuid);
+    if (cardRef.current) {
+      cardRef.current.style.display = "none";
+    }
   };
 
   const fetchComments = useCallback(async () => {
@@ -225,16 +228,16 @@ function PrayButton({
   uuid: string;
   handleRemovePrayer: () => void;
 }) {
-  const handleStartPraying = useCallback(() => {
+  const handleStartPraying = () => {
     toast.promise(startPraying(uuid), {
       loading: "Praying...",
       success: () => {
         handleRemovePrayer();
         return "Prayer request has been sent to your Prayer room";
       },
-      error: "Something went wrong, please try again",
+      error: (error) => error.message,
     });
-  }, [handleRemovePrayer, uuid]);
+  };
 
   return (
     <button
@@ -253,7 +256,7 @@ function DoneButton({
   uuid: string;
   handleRemovePrayer: () => void;
 }) {
-  const handleDonePraying = useCallback(() => {
+  const handleDonePraying = () => {
     toast.promise(donePraying(uuid), {
       loading: "finishing prayer...",
       success: () => {
@@ -262,7 +265,7 @@ function DoneButton({
       },
       error: "Something went wrong, please try again",
     });
-  }, [handleRemovePrayer, uuid]);
+  };
 
   return (
     <AlertDialog>
@@ -585,23 +588,15 @@ function SendTestimony({
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const title = formData.get("title") as string;
     const description = formData.get("testimony") as string;
     const image = formData.get("media") as string;
-
-    // make only title and description required
-    if (!title) {
-      toast.error("Title is required");
-      return;
-    }
 
     if (!description) {
       toast.error("Description is required");
       return;
     }
 
-    const payload: Pick<Prayer, "uuid" | "title" | "description" | "image"> = {
-      title,
+    const payload: Pick<Prayer, "uuid" | "description" | "image"> = {
       description,
       uuid: prayerId,
     };
