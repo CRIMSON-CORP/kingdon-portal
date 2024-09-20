@@ -54,7 +54,7 @@ export async function postPrayer(
       },
     });
 
-    revalidatePath("/dashboard");
+    revalidatePath("/", "layout");
     console.log("should have revalidated path");
   } catch (error) {
     throw error;
@@ -142,10 +142,10 @@ export async function startPraying(prayer_uuid: string) {
         },
       }
     );
+    revalidatePath("/");
     return response.data.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
   }
 }
 
@@ -161,7 +161,7 @@ export async function donePraying(prayer_uuid: string) {
         },
       }
     );
-    revalidatePath("/dashboard/prayer-room");
+    revalidatePath("/", "layout");
     return response.data.data;
   } catch (error) {
     console.log(error);
@@ -241,7 +241,7 @@ export async function getTestimonies<T>({
 }
 
 export async function postTestimony(
-  payload: Pick<Prayer, "uuid" | "title" | "description" | "image">
+  payload: Pick<Prayer, "uuid" | "description" | "image">
 ) {
   const session = await getServerSession(nextAuthOptions);
   try {
@@ -256,6 +256,22 @@ export async function postTestimony(
     );
 
     revalidatePath("/dashboard");
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getDashboardData<T>(path?: string) {
+  const session = await getServerSession(nextAuthOptions);
+  try {
+    const response = await axios.get("/user/user-dashboard", {
+      headers: {
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+    });
+
+    path && revalidatePath(path);
+    return response.data.data as T;
   } catch (error) {
     throw error;
   }

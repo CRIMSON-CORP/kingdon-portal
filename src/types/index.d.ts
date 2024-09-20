@@ -102,3 +102,16 @@ interface PrayerComment {
   updated_at: string;
   uuid: string;
 }
+
+interface UserDashboard {
+  prayer_count: number;
+  testimony_count: number;
+  chosen_prayer_count: number;
+  completed_prayer_count: number;
+  user: {
+    uuid: string;
+    unique_id: string;
+    email: string;
+    image_url: string | null;
+  };
+}
