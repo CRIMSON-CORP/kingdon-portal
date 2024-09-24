@@ -50,7 +50,10 @@ export const nextAuthOptions: NextAuthOptions = {
     async redirect(params) {
       const { url } = params;
       if (url.startsWith("/")) return `${process.env.NEXTAUTH_URL}${url}`;
-      return `${process.env.NEXTAUTH_URL}/${new URL(url).pathname}`;
+      console.log(
+        `${process.env.NEXTAUTH_URL}${new URL(url).pathname}, env url redirect`
+      );
+      return `${process.env.NEXTAUTH_URL}${new URL(url).pathname}`;
     },
   },
   jwt: {
