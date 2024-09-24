@@ -47,12 +47,10 @@ export const nextAuthOptions: NextAuthOptions = {
       session.user = token;
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+    async redirect(params) {
+      const { url } = params;
+      if (url.startsWith("/")) return `${process.env.NEXTAUTH_URL}${url}`;
+      return `${process.env.NEXTAUTH_URL}/${new URL(url).pathname}`;
     },
   },
   jwt: {
