@@ -14,7 +14,7 @@ function Feed({ prayers, status }: { prayers: Prayer[]; status: string }) {
       queryFn={async ({ pageParam }) => {
         const response = await getPrayers<{ data: Prayer[] }>({
           page: pageParam.toString(),
-          owner: "self",
+          owner: "others",
           prayer_status: status,
         });
 

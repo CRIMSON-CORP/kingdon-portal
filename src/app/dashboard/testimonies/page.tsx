@@ -8,7 +8,7 @@ async function page() {
       data: Testimony[];
     } & PaginationData
   >({
-    self: "self",
+    self: "others",
     page: 1,
   });
 

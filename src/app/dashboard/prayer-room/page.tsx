@@ -3,7 +3,7 @@ import Feed from "./Feed";
 async function page({ searchParams }: PageProps) {
   const params = {
     ...searchParams,
-    owner: "self",
+    owner: "others",
     prayer_status: searchParams.view === "pending" ? "praying" : "prayed",
   };
   const prayers = await getPrayers<{ data: Prayer[] }>(params);
